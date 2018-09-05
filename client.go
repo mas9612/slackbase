@@ -2,6 +2,7 @@ package slackbase
 
 import (
 	"github.com/mas9612/slackbase/handler"
+	"github.com/mas9612/slackbase/message"
 	"github.com/nlopes/slack"
 )
 
@@ -23,11 +24,11 @@ func Run(apiToken string) {
 }
 
 func handleMessage(rtm *slack.RTM, request *slack.MessageEvent) {
-	var msg *slack.OutgoingMessage
-
+	var msg message.Message
 	if request.Text == "ping" {
 		msg = handler.PingHandler(rtm, request)
 	}
 
-	rtm.SendMessage(msg)
+	sendMsg := rtm.NewOutgoingMessage(msg.Text, msg.Channel)
+	rtm.SendMessage(sendMsg)
 }
