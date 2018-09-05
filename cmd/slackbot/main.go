@@ -13,5 +13,6 @@ func main() {
 		log.Fatalln("SLACK_API_TOKEN environment variable is not set")
 	}
 
-	slackbase.Run(apiToken)
+	client := slackbase.NewClient(apiToken)
+	client.Run()
 }
